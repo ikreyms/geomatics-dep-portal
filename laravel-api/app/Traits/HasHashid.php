@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Services\Encoder;
 use Hashids\Hashids;
 use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
@@ -52,7 +53,7 @@ trait HasHashid
      */
     public function encodeHashid(int $id): string
     {
-        return $this->getHashidEncoder()->encode($id);
+        return Encoder::getInstance()->encode($id);
     }
 
     /**
@@ -67,7 +68,7 @@ trait HasHashid
      */
     public function decodeHashid(string $hashid): ?int
     {
-        $decoded = $this->getHashidEncoder()->decode($hashid);
+        $decoded = Encoder::getInstance()->decode($hashid);
         if (!$decoded) {
             throw new InvalidArgumentException('Invalid Hashid');
         }
@@ -123,27 +124,5 @@ trait HasHashid
     public function scopeOfHashid(Builder $query, string $hashid): void
     {
         $query->where(config('hashid.field'), $hashid);
-    }
-
-
-    /**
-     * Get the Hashids encoder instance.
-     * 
-     * This method checks if the encoder has already been instantiated
-     * and returns it. If it hasn't, it creates a new instance using
-     * the configuration options.
-     *
-     * @return Hashids
-     */
-    private function getHashidEncoder()
-    {
-        if ($this->encoder === null) {
-            $this->encoder = new Hashids(
-                config('hashid.salt'),
-                config('hashid.length'),
-                config('hashid.chars')
-            );
-        }
-        return $this->encoder;
     }
 }
