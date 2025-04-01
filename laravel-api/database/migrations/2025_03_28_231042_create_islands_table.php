@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->float('area_sqm')->nullable();
             $table->foreignId('island_category_id')->constrained('island_categories', 'id')->nullOnDelete()->nullable();
+
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }
