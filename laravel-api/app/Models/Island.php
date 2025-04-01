@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Traits\HasHashid;
+use App\Traits\HasCreatedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Island extends Model
 {
-    use HasFactory;
+    use HasFactory, HasCreatedBy;
     
     protected $fillable = [
         'f_code',
