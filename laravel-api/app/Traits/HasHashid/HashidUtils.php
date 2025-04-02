@@ -1,34 +1,15 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\HasHashid;
 
 use App\Services\Encoder;
-use Hashids\Hashids;
 use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-trait HasHashid
+trait HashidUtils
 {
-    protected ?Hashids $encoder = null;
-
-    /**
-     * Boot the trait to listen for the saved event on the model.
-     * This ensures the `hashid` is generated when the model is saved.
-     *
-     * @return void
-     */
-    protected static function booted(): void
-    {
-        static::saved(function (Model $model) {
-            if (empty($model->hashid) && ! $model->isDirty('hashid')) {
-                $model->hashid = $model->encodeHashid($model->{$model->getKeyName()});
-                $model->save();
-            }
-        });
-    }
-
     /**
      * Define the field to be used for route model binding.
      * 
