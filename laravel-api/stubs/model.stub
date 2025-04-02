@@ -6,9 +6,10 @@ namespace {{ namespace }};
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\HasHashid\HasHashid;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class {{ class }} extends Model
 {
-    use HasFactory, HasHashid;
+    use HasFactory, HasHashid, SoftDeletes;
     //
 }

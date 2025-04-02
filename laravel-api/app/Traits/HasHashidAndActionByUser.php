@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Traits;
 
@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasHashid\HashidUtils;
 
-trait HasHashidAndCreatedBy
+trait HasHashidAndActionByUser
 {
     use HashidUtils;
 
@@ -37,6 +37,14 @@ trait HasHashidAndCreatedBy
         // Automatically update 'updated_by' during updates
         static::updating(function (Model $model) {
             $model->updated_by = Auth::id(); // Assumes you have an `updated_by` field in your table
+        });
+
+        // Automatically assign 'deleted_by' during deletion (soft delete or hard delete)
+        static::deleted(function (Model $model) {
+            if ($model->trashed()) {
+                $model->deleted_by = Auth::id(); // Assign the currently authenticated user's ID when soft deleting
+                $model->save();
+            }
         });
     }
 }
