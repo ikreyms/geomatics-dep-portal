@@ -16,7 +16,7 @@ class Atoll extends Model
         'short_name',
     ];
 
-    public function islands() : HasMany 
+    public function islands(): HasMany 
     {
         return $this->hasMany(Island::class);
     }
