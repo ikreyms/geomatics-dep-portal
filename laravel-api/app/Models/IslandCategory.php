@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use App\Traits\HasHashidAndCreatedBy;
+use App\Traits\HasHashidAndActionByUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class IslandCategory extends Model
 {
-    use HasFactory, HasHashidAndCreatedBy;
+    use HasFactory, HasHashidAndActionByUser, SoftDeletes;
 
     protected $fillable = [
         'name'

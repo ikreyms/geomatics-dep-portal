@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use App\Traits\HasCreatedBy;
+use App\Traits\HasActionByUser;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Island extends Model
 {
-    use HasFactory, HasCreatedBy;
+    use HasFactory, HasActionByUser, SoftDeletes;
     
     protected $fillable = [
         'f_code',
