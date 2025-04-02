@@ -10,12 +10,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class IslandCategory extends Model
 {
     use HasFactory, HasHashidAndCreatedBy;
-    
+
     protected $fillable = [
         'name'
     ];
 
-    public function islands() : HasMany {
+    public function islands(): HasMany
+    {
         return $this->hasMany(Island::class);
     }
 }
