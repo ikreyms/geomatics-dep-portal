@@ -12,6 +12,13 @@ class RegisterUserController extends Controller
 {
     public function __invoke(RegisterUserRequest $request)
     {
+
+        // no typical registeruser functionality in this portal.
+        // users are to be created:
+        // - Staff users can only be created by System Administrator.
+        // - Surveyor users can be created by System Administrator and staff users with relevant permissions.
+
+
         try {
             $data = $request->validated();
             $user = RegisterUserAction::run($data);
