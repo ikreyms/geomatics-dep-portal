@@ -37,6 +37,10 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
-        return $this->destroyModel($role);
+        try {
+            $role->delete();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 }
