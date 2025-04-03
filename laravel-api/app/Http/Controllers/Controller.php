@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\ControllerAction;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
 
 abstract class Controller
