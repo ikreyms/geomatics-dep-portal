@@ -3,11 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MeController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\AtollController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\IslandCategoryController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\EmailVerificationController;
-use App\Http\Controllers\IslandCategoryController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -35,4 +36,5 @@ Route::middleware(['auth:sanctum'])->group(function() {
 
     Route::apiResource('atolls', AtollController::class);
     Route::apiResource('island-categories', IslandCategoryController::class);
+    Route::apiResource('roles', RoleController::class);
 });

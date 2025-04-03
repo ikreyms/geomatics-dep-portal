@@ -2,14 +2,28 @@
 
 namespace {{ namespace }};
 
-{{ factoryImport }}
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Traits\HasHashid\HasHashid;
+use App\Traits\HasHashidAndActionByUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class {{ class }} extends Model
 {
-    use HasFactory, HasHashid, SoftDeletes;
-    //
+    use HasFactory, HasHashidAndActionByUser, SoftDeletes, LogsActivity;
+
+    protected $fillable = [
+        // Add fillable attributes here
+    ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
+    public function islands(): HasMany
+    {
+        return $this->hasMany(Island::class);
+    }
 }

@@ -3,8 +3,9 @@
 namespace App\Actions\Atoll;
 
 use App\Models\Atoll;
+use App\Contracts\ControllerAction;
 
-class StoreAtollAction
+class StoreAtollAction implements ControllerAction
 {
     public static function run(array $data): Atoll
     {

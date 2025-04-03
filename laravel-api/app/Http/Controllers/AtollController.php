@@ -12,14 +12,20 @@ class AtollController extends Controller
 {
     public function store(StoreAtollRequest $request)
     {
-        try {
-            $data = $request->validated();
-            $atoll = StoreAtollAction::run($data);
-            return AtollResource::make($atoll);
-        } catch (\Exception $e) {
-            $this->logError($e, 'Atoll creation failed', $data);
-            return $this->somethingWentWrong();
-        }
+        $this->storeModel(
+            $request, 
+            StoreAtollAction::class, 
+            AtollResource::class, 
+            'Atoll'
+        );
+        // try {
+        //     $data = $request->validated();
+        //     $atoll = StoreAtollAction::run($data);
+        //     return AtollResource::make($atoll);
+        // } catch (\Exception $e) {
+        //     $this->logError($e, 'Atoll creation failed', $data);
+        //     return $this->somethingWentWrong();
+        // }
     }
 
     public function index()
