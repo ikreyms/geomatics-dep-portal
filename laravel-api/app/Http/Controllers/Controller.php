@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\ControllerAction;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -32,20 +33,31 @@ abstract class Controller
             $model = $actionClass::run($data);
             return $resourceClass::make($model);
         } catch (\Exception $e) {
-            $this->logError($e, "{$modelName} creation failed", $data);
+            $this->logError($e, "{$modelName} creation failed", $data ?? null);
             return $this->somethingWentWrong();
         }
     }
 
-    protected function updateModel(FormRequest $request, string $actionClass, string $resourceClass, string $modelName = 'Model')
+    protected function updateModel(FormRequest $request, Model $model, string $modelName = 'Model')
     {
-        // try {
-        //     $data = $request->validated();
-        //     $atoll->update($data);
-        //     return response()->noContent();
-        // } catch (\Exception $e) {
-        //     $this->logError($e, 'Atoll update failed', $data ?? null);
-        //     return $this->somethingWentWrong();
-        // }
+        try {
+            $data = $request->validated();
+            $model->update($data);
+            return response()->noContent();
+        } catch (\Exception $e) {
+            $this->logError($e, "{$modelName} update failed", $data ?? null);
+            return $this->somethingWentWrong();
+        }
+    }
+
+    protected function destroyModel(Model $model, $modelName = 'Model')
+    {
+        try {
+            $model->delete();
+            return response()->noContent();
+        } catch (\Exception $e) {
+            $this->logError($e, "{$$modelName} deletion failed");
+            return $this->somethingWentWrong();
+        }
     }
 }

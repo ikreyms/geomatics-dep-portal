@@ -12,20 +12,12 @@ class AtollController extends Controller
 {
     public function store(StoreAtollRequest $request)
     {
-        $this->storeModel(
+        return $this->storeModel(
             $request, 
             StoreAtollAction::class, 
             AtollResource::class, 
             'Atoll'
         );
-        // try {
-        //     $data = $request->validated();
-        //     $atoll = StoreAtollAction::run($data);
-        //     return AtollResource::make($atoll);
-        // } catch (\Exception $e) {
-        //     $this->logError($e, 'Atoll creation failed', $data);
-        //     return $this->somethingWentWrong();
-        // }
     }
 
     public function index()
@@ -40,24 +32,11 @@ class AtollController extends Controller
 
     public function update(UpdateAtollRequest $request, Atoll $atoll)
     {
-        try {
-            $data = $request->validated();
-            $atoll->update($data);
-            return response()->noContent();
-        } catch (\Exception $e) {
-            $this->logError($e, 'Atoll update failed', $data ?? null);
-            return $this->somethingWentWrong();
-        }
+        return $this->updateModel($request, $atoll, 'Atoll');
     }
 
     public function destroy(Atoll $atoll)
     {
-        try {
-            $atoll->delete();
-            return response()->noContent();
-        } catch (\Exception $e) {
-            $this->logError($e, 'Atoll deletion failed');
-            return $this->somethingWentWrong();
-        }
+        return $this->destroyModel($atoll);
     }
 }

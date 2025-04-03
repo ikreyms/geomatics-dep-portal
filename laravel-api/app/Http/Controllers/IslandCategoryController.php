@@ -12,14 +12,12 @@ class IslandCategoryController extends Controller
 {
     public function store(StoreIslandCategoryRequest $request)
     {
-        try {
-            $data = $request->validated();
-            $islandCategory = StoreIslandCategoryAction::run($data);
-            return IslandCategoryResource::make($islandCategory);
-        } catch (\Exception $e) {
-            $this->logError($e, 'Island category creation failed', $data);
-            return $this->somethingWentWrong();
-        }
+        return $this->storeModel(
+            $request, 
+            StoreIslandCategoryAction::class, 
+            IslandCategoryResource::class, 
+            'Island category'
+        );
     }
 
     public function index()
@@ -34,24 +32,11 @@ class IslandCategoryController extends Controller
 
     public function update(UpdateIslandCategoryRequest $request, IslandCategory $island_category)
     {
-        try {
-            $data = $request->validated();
-            $island_category->update($data);
-            return response()->noContent();
-        } catch (\Exception $e) {
-            $this->logError($e, 'Island category update failed', $data ?? null);
-            return $this->somethingWentWrong();
-        }
+        return $this->updateModel($request, $island_category, 'Island category');
     }
 
     public function destroy(IslandCategory $island_category)
     {
-        try {
-            $island_category->delete();
-            return response()->noContent();
-        } catch (\Exception $e) {
-            $this->logError($e, 'Island category deletion failed');
-            return $this->somethingWentWrong();
-        }
+        return $this->destroyModel($island_category);
     }
 }
