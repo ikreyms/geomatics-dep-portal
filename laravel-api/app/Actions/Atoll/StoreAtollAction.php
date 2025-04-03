@@ -10,7 +10,7 @@ class StoreAtollAction implements ControllerAction
     public static function run(array $data): Atoll
     {
         $atoll = Atoll::create([
-            'short_name' => $data['short_name'],
+            'short_name' => strtolower($data['short_name']),
             'abbreviation' => $data['abbreviation'],
         ]);
 

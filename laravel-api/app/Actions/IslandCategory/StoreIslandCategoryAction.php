@@ -9,7 +9,7 @@ class StoreIslandCategoryAction
     public static function run(array $data)
     {
         $atoll = IslandCategory::create([
-            'name' => $data['name'],
+            'name' => strtolower($data['name']),
         ]);
 
         return $atoll;

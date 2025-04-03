@@ -9,7 +9,7 @@ class StoreRoleAction
     public static function run(array $data)
     {
         $role = Role::create([
-            'name' => $data['name'],
+            'name' => strtolower($data['name']),
         ]);
 
         return $role;
