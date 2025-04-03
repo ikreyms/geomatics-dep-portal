@@ -22,8 +22,19 @@ class StoreAtollRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'short_name' => ['required', 'string', 'unique:atolls,short_name'],
-            'abbreviation' => ['required', 'string', 'unique:atolls,abbreviation', 'max:3'],
+            'short_name' => [
+                'required',
+                'string',
+                'unique:atolls,short_name',
+                'regex:/^[a-zA-Z0-9 ]+$/',
+            ],
+            'abbreviation' => [
+                'required',
+                'string',
+                'unique:atolls,abbreviation',
+                'regex:/^[a-zA-Z0-9]+$/',
+                'max:4',
+            ],
         ];
     }
 }

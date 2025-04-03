@@ -22,7 +22,12 @@ class StoreIslandCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => [
+                'required',
+                'string',
+                'unique:island_categories,name',
+                'regex:/^[a-zA-Z ]+$/',
+            ],
         ];
     }
 }

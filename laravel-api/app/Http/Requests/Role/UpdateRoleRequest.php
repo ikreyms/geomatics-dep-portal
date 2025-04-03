@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Role;
 
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class RegisterUserRequest extends FormRequest
+class UpdateRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,15 @@ class RegisterUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $role = $this->route('role');
+
         return [
-            'username' => ['required', 'unique:users,username', 'regex:/^[a-zA-Z0-9]+$/'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Password::defaults()]
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('roles', 'name')->ignore($role->id),
+                'regex:/^[a-zA-Z ]+$/',
+            ],
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\IslandCategory;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateIslandCategoryRequest extends FormRequest
 {
@@ -21,8 +22,15 @@ class UpdateIslandCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $islandCategory = $this->route('island_category');
+
         return [
-            'name' => ['required', 'string'],
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('island_categories', 'name')->ignore($islandCategory->id),
+                'regex:/^[a-zA-Z ]+$/',
+            ],
         ];
     }
 }
