@@ -199,4 +199,6 @@ return [
 
         'store' => 'default',
     ],
+
+    'system_admin_role_name' => 'System Administrator',
 ];
