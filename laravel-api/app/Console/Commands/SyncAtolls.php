@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Atoll;
+use App\Services\IdEncoder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -37,13 +38,13 @@ class SyncAtolls extends Command
             ];
         }
 
-        DB::transaction(function() use($atollData) {
+        DB::transaction(function () use ($atollData) {
             foreach ($atollData as $atoll) {
                 $model = new Atoll($atoll);
                 $model->save();
 
                 // Now that the model has an id, you can generate the hashid
-                $model->hashid = $model->encodeHashid($model->id);
+                $model->hashid = IdEncoder::encodeHashid($model->id);
                 $model->save(); // Save the hashid
             }
         });
