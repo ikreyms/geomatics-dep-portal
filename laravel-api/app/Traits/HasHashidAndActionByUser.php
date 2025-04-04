@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Services\IdEncoder;
 use Hashids\Hashids;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -10,8 +11,6 @@ use App\Traits\HasHashid\HashidUtils;
 trait HasHashidAndActionByUser
 {
     use HashidUtils;
-
-    protected static ?Hashids $encoder = null;
 
     /**
      * Boot the trait to listen for the saved event on the model.
@@ -24,7 +23,7 @@ trait HasHashidAndActionByUser
     {
         static::saved(function (Model $model) {
             if (empty($model->hashid) && ! $model->isDirty('hashid')) {
-                $model->hashid = $model->encodeHashid($model->{$model->getKeyName()});
+                $model->hashid = IdEncoder::encodeHashid($model->{$model->getKeyName()});
                 $model->save();
             }
         });
