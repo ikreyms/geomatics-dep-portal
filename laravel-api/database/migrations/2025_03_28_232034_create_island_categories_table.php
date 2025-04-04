@@ -22,6 +22,8 @@ return new class extends Migration
 
             $table->softDeletes();
             $table->timestamps();
+
+            $table->index(config('hashid.field'));
         });
     }
 
