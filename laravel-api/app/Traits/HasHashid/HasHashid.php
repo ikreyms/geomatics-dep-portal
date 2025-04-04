@@ -2,6 +2,7 @@
 
 namespace App\Traits\HasHashid;
 
+use App\Services\IdEncoder;
 use App\Traits\HasHashid\HashidUtils;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +20,7 @@ trait HasHashid
     {
         static::saved(function (Model $model) {
             if (empty($model->hashid) && ! $model->isDirty('hashid')) {
-                $model->hashid = $model->encodeHashid($model->{$model->getKeyName()});
+                $model->hashid = IdEncoder::encodeHashid($model->{$model->getKeyName()});
                 $model->save();
             }
         });

@@ -2,7 +2,7 @@
 
 namespace App\Traits\HasHashid;
 
-use App\Services\Encoder;
+use App\Services\IdEncoder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -33,7 +33,7 @@ trait HashidUtils
      */
     public static function findByHashid(string $hashid): ?Model
     {
-        $id = Encoder::decodeHashid($hashid);
+        $id = IdEncoder::decodeHashid($hashid);
         if ($id) {
             return static::find($id);
         }
@@ -52,7 +52,7 @@ trait HashidUtils
      */
     public static function findByHashidOrFail(string $hashid): Model
     {
-        $id = Encoder::decodeHashid($hashid);
+        $id = IdEncoder::decodeHashid($hashid);
         if (!$id) {
             throw new ModelNotFoundException('Model not found for the provided Hashid');
         }
