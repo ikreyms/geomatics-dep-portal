@@ -16,10 +16,10 @@ class IslandResource extends JsonResource
     {
         return [
             'f_code' => $this->f_code,
-            'atoll' => AtollResource::make($this->whenLoaded('atoll')),
+            'atoll' => AtollResource::make($this->atoll),
             'name' => $this->name,
             'area_sqm' => $this->area_sqm,
-            'island_category_id' => IslandCategoryResource::make($this->whenLoaded('islandCategory')),
+            'island_category_id' => IslandCategoryResource::make($this->islandCategory),
         ];
     }
 }
