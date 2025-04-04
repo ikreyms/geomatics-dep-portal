@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\IslandCategoryController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\IslandController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -37,4 +38,5 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::apiResource('atolls', AtollController::class);
     Route::apiResource('island-categories', IslandCategoryController::class);
     Route::apiResource('roles', RoleController::class);
+    Route::apiResource('islands', IslandController::class);
 });
