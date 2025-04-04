@@ -45,7 +45,7 @@ class SetupSystemAdmin extends Command
         $this->line('Account created...');
 
         $this->line('Creating system administrator role...');
-        $adminRole = Role::findOrCreate('System Administrator');
+        $adminRole = Role::findOrCreate(config('permission.system_admin_role_name'));
         $adminRoleName = $adminRole->name;
         $this->info('Role created: ' . $adminRoleName . '.');
 
