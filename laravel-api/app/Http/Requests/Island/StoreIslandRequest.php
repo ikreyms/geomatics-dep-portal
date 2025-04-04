@@ -22,11 +22,11 @@ class StoreIslandRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'f_code' => ['required', 'string', 'regex:/^LD\d{4}$/'],
-            'atoll_id' => ['required', 'exists:atolls'],
+            'f_code' => ['required', 'string', 'unique:islands,f_code', 'regex:/^LD\d{4}$/'],
+            'atoll_id' => ['required', 'string', 'exists:atolls,hashid'],
             'name' => ['required', 'string', 'regex:/^[a-zA-Z ]+$/'],
-            'area_sqm' => ['nullable', 'float'],
-            'island_category_id' => [],
+            'area_sqm' => ['nullable', 'numeric'],
+            'island_category_id' => ['nullable', 'string', 'exists:island_categories,hashid'],
         ];
     }
 }
