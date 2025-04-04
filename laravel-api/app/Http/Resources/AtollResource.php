@@ -16,7 +16,7 @@ class AtollResource extends JsonResource
     {
         return [
             'id' => $this->hashid,
-            'shortName' => $this->short_name,
+            'short_name' => $this->short_name,
             'abbreviation' => $this->abbreviation,
         ];
     }
