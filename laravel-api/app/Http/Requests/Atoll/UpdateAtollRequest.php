@@ -26,13 +26,13 @@ class UpdateAtollRequest extends FormRequest
 
         return [
             'short_name' => [
-                'required',
+                'sometimes',
                 'string', 
                 Rule::unique('atolls', 'short_name')->ignore($atoll->id),
                 'regex:/^[a-zA-Z ]+$/',
             ],
             'abbreviation' => [
-                'required',
+                'sometimes',
                 'string',
                 Rule::unique('atolls', 'abbreviation')->ignore($atoll->id),
                 'regex:/^[a-zA-Z]+$/',
