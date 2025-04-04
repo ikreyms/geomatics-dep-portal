@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Log;
+use App\Http\Resources\RoleResource;
 use App\Actions\Role\StoreRoleAction;
 use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
-use App\Http\Resources\RoleResource;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
@@ -37,10 +39,15 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
-        try {
-            $role->delete();
-        } catch (\Exception $e) {
-            dd($e->getMessage());
+        $systemAdminRoleName = config('permission.system_admin_role_name');
+
+        if ($role->name === $systemAdminRoleName) {
+            Log::warning("Attempt to delete {$systemAdminRoleName} role", [
+                'user' => Auth::user()->username
+            ]);
+            return response(null, 403);
         }
+        
+        return $this->destroyModel($role, 'Role');
     }
 }
