@@ -37,6 +37,6 @@ class AtollController extends Controller
 
     public function destroy(Atoll $atoll)
     {
-        return $this->destroyModel($atoll);
+        return $this->destroyModel($atoll, 'Atoll');
     }
 }
