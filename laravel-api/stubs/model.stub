@@ -21,9 +21,4 @@ class {{ class }} extends Model
     {
         return LogOptions::defaults();
     }
-
-    public function islands(): HasMany
-    {
-        return $this->hasMany(Island::class);
-    }
 }
