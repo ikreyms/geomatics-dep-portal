@@ -15,6 +15,7 @@ class IslandResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->hashid,
             'f_code' => $this->f_code,
             'atoll' => AtollResource::make($this->atoll),
             'name' => $this->name,
