@@ -6,6 +6,7 @@ use App\Models\Island;
 use App\Http\Resources\IslandResource;
 use App\Actions\Island\StoreIslandAction;
 use App\Http\Requests\Island\StoreIslandRequest;
+use App\Http\Requests\Island\UpdateIslandRequest;
 
 class IslandController extends Controller
 {
@@ -29,13 +30,13 @@ class IslandController extends Controller
         return IslandResource::make($island);
     }
 
-    // public function update(UpdateAtollRequest $request, Atoll $atoll)
-    // {
-    //     return $this->updateModel($request, $atoll, 'Atoll');
-    // }
+    public function update(UpdateIslandRequest $request, Island $island)
+    {
+        return $this->updateModel($request, $island, 'Island');
+    }
 
-    // public function destroy(Atoll $atoll)
-    // {
-    //     return $this->destroyModel($atoll);
-    // }
+    public function destroy(Island $island)
+    {
+        return $this->destroyModel($island);
+    }
 }
