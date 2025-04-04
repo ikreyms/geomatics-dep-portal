@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('islands', function (Blueprint $table) {
             $table->id();
+            $table->string(config('hashid.field'))->nullable();
             $table->string('f_code')->unique();
             $table->foreignId('atoll_id')->constrained('atolls', 'id')->cascadeOnDelete();
             $table->string('name')->nullable();
@@ -25,6 +26,8 @@ return new class extends Migration
 
             $table->softDeletes();
             $table->timestamps();
+
+            $table->index(config('hashid.field'));
         });
     }
 
