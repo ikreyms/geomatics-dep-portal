@@ -3,7 +3,6 @@
 namespace App\Traits\HasHashid;
 
 use App\Services\Encoder;
-use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -24,39 +23,6 @@ trait HashidUtils
     }
 
     /**
-     * Encode the model's ID (or any other field) using Hashids.
-     * 
-     * This method takes an ID and encodes it using the Hashids library
-     * to create a short, URL-safe hashid.
-     *
-     * @param  int $id
-     * @return string
-     */
-    public function encodeHashid(int $id): string
-    {
-        return Encoder::getInstance()->encode($id);
-    }
-
-    /**
-     * Decode the hashid to retrieve the original ID.
-     * 
-     * This method decodes a given hashid and returns the corresponding
-     * model's ID. If the hashid is invalid, an exception is thrown.
-     *
-     * @param  string $hashid
-     * @return int|null
-     * @throws InvalidArgumentException if the hashid is invalid
-     */
-    public function decodeHashid(string $hashid): ?int
-    {
-        $decoded = Encoder::getInstance()->decode($hashid);
-        if (!$decoded) {
-            throw new InvalidArgumentException('Invalid Hashid');
-        }
-        return $decoded[0];
-    }
-
-    /**
      * Get the model instance by hashid.
      * 
      * This method looks up a model by its hashid, decodes the hashid,
@@ -67,12 +33,11 @@ trait HashidUtils
      */
     public static function findByHashid(string $hashid): ?Model
     {
-        $instance = new static;
-        $id = $instance->decodeHashid($hashid);
+        $id = Encoder::decodeHashid($hashid);
         if ($id) {
             return static::find($id);
         }
-        return null;
+        return static::find($id) ?? null;
     }
 
     /**
@@ -87,12 +52,11 @@ trait HashidUtils
      */
     public static function findByHashidOrFail(string $hashid): Model
     {
-        $instance = new static;
-        $id = $instance->decodeHashid($hashid);
+        $id = Encoder::decodeHashid($hashid);
         if (!$id) {
             throw new ModelNotFoundException('Model not found for the provided Hashid');
         }
-        return $instance->findOrFail($id);
+        return static::findOrFail($id);
     }
 
     /**
