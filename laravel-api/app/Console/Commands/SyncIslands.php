@@ -35,8 +35,6 @@ class SyncIslands extends Command
                     'name' => ($row[2] === '' || $row[2] === ' ') ? null : $row[2],
                     'area_sqm' => $row[6],
                     'island_category_id' => $row[7],
-                    'created_at' => now(),
-                    'updated_at' => now(),
                 ];
             }
 

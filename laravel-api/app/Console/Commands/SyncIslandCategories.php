@@ -32,8 +32,6 @@ class SyncIslandCategories extends Command
         foreach ($categories as $category) {
             $categoryData[] = [
                 'name' => $category,
-                'created_at' => now(),
-                'updated_at' => now(),
             ];
         }
 

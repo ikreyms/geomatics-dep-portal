@@ -36,8 +36,6 @@ class SyncPermissions extends Command
                 $newPermissions[] = [
                     'name' => $permissionName,
                     'guard_name' => 'web',
-                    'created_at' => now(),
-                    'updated_at' => now(),
                 ];
             }
         });

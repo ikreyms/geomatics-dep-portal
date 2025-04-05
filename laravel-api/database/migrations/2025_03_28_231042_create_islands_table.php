@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('atoll_id')->constrained('atolls', 'id')->cascadeOnDelete();
             $table->string('name')->nullable();
             $table->float('area_sqm')->nullable();
-            $table->foreignId('island_category_id')->constrained('island_categories', 'id')->nullOnDelete()->nullable();
+            $table->foreignId('island_category_id')->nullable()->constrained('island_categories', 'id')->nullOnDelete();
 
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();

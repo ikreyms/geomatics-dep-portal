@@ -33,8 +33,6 @@ class SyncAtolls extends Command
             $atollData[] = [
                 'abbreviation' => $atoll['abbreviation'],
                 'short_name' => $atoll['short_name'],
-                'created_at' => now(),
-                'updated_at' => now(),
             ];
         }
 
