@@ -15,26 +15,34 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::group(['prefix' => 'auth'], function() {
-    Route::post('register', RegisterUserController::class)->name('auth.register');
+// Authentication Routes (Login, Logout, and Registration)
+Route::group(['prefix' => 'auth'], function () {
+    // Login & Logout Routes
     Route::post('login', [LoginController::class, 'store'])->name('auth.login');
+    Route::post('logout', [LoginController::class, 'destroy'])->name('auth.logout')
+        ->middleware(['auth:sanctum']);
 
-    Route::post('logout', [LoginController::class, 'destroy'])
-        ->middleware('auth:sanctum')
-        ->name('auth.logout');
+    // Registration Routes
+    Route::controller(RegisterUserController::class)->group(function () {
+        Route::post('register-staff', 'registerStaff')->name('auth.register.staff');
+        Route::post('register-surveyor', 'registerSurveyor')->name('auth.register.surveyor');
+    })->middleware(['auth:sanctum']);
 });
 
-Route::middleware(['auth:sanctum'])->group(function() {
-    Route::get('me', MeController::class)->name('me');
-
-    Route::controller(EmailVerificationController::class)->group(function() {
+// Email Verification Routes (With Throttling)
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::controller(EmailVerificationController::class)->group(function () {
         Route::post('email/verification-notification', 'sendVerificationEmail')
-            ->middleware('throttle:6,1')
+            ->middleware('throttle:6,1') // Throttle to limit requests to 6 per minute
             ->name('email.verification.notification');
         Route::get('verify-email/{userhashid}/{emailHash}', 'verify')
             ->name('verification.verify');
     });
+});
 
+// Authenticated User Routes (Protected by Sanctum Middleware)
+Route::middleware(['auth:sanctum'])->group(function () {
+    // Resource Routes
     Route::apiResource('atolls', AtollController::class);
     Route::apiResource('island-categories', IslandCategoryController::class);
     Route::apiResource('roles', RoleController::class);

@@ -2,30 +2,30 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
-use App\Actions\Auth\RegisterUserAction;
-use App\Http\Requests\Auth\RegisterUserRequest;
 use Exception;
+use App\Models\User;
+use App\Models\StaffProfile;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\RegisterStaffRequest;
 
 class RegisterUserController extends Controller
 {
-    public function __invoke(RegisterUserRequest $request)
+    public function registerStaff(RegisterStaffRequest $request)
     {
+        $data = $request->validated();
 
-        // no typical registeruser functionality in this portal.
-        // users are to be created:
-        // - Staff users can only be created by System Administrator.
-        // - Surveyor users can be created by System Administrator and staff users with relevant permissions.
+        $userDataFields = ['username', 'email'];
+        $profileDataFields = array_diff_key($data, array_flip($userDataFields));
 
+        $profileData = array_intersect_key($data, $profileDataFields);
+        $profile = StaffProfile::create($profileData);
 
-        try {
-            $data = $request->validated();
-            $user = RegisterUserAction::run($data);
-            return UserResource::make($user);
-        } catch (Exception $e) {
-            $this->logError($e, 'User registration failed', $data);
-            return $this->somethingWentWrong();
-        }
+        $userData = array_intersect_key($data, $userDataFields);
+        $user = User::create($userData);
+        $user->update([
+            'profile_type' => StaffProfile::class,
+            'profile_id' => $profile->id,
+        ]);
+        return response(null, 200);
     }
 }
