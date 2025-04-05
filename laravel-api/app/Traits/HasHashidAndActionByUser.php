@@ -22,8 +22,8 @@ trait HasHashidAndActionByUser
     protected static function booted(): void
     {
         static::saved(function (Model $model) {
-            if (empty($model->hashid) && ! $model->isDirty('hashid')) {
-                $model->hashid = IdEncoder::encodeHashid($model->{$model->getKeyName()});
+            if (empty($model->{config('hashid.field')}) && ! $model->isDirty(config('hashid.field'))) {
+                $model->{config('hashid.field')} = IdEncoder::encodeHashid($model->{$model->getKeyName()});
                 $model->save();
             }
         });
