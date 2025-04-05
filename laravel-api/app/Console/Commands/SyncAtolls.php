@@ -38,12 +38,7 @@ class SyncAtolls extends Command
 
         DB::transaction(function () use ($atollData) {
             foreach ($atollData as $atoll) {
-                $model = new Atoll($atoll);
-                $model->save();
-
-                // Now that the model has an id, you can generate the hashid
-                $model->hashid = IdEncoder::encodeHashid($model->id);
-                $model->save(); // Save the hashid
+                IdEncoder::createNewModelWithHashid(Atoll::class, $atoll);
             }
         });
 

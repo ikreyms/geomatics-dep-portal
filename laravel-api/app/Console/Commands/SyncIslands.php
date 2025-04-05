@@ -43,12 +43,7 @@ class SyncIslands extends Command
             if (count($data) > 0) {
                 DB::transaction(function () use ($data) {
                     foreach ($data as $island) {
-                        $model = new Island($island);
-                        $model->save();
-
-                        // Now that the model has an id, you can generate the hashid
-                        $model->hashid = IdEncoder::encodeHashid($model->id);
-                        $model->save(); // Save the hashid
+                        IdEncoder::createNewModelWithHashid(Island::class, $island);
                     }
                 });
                 $this->info(count($data) . ' islands imported successfully!');

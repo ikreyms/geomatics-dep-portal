@@ -37,12 +37,7 @@ class SyncIslandCategories extends Command
 
         DB::transaction(function() use($categoryData) {
             foreach ($categoryData as $category) {
-                $model = new IslandCategory($category);
-                $model->save();
-
-                // Now that the model has an id, you can generate the hashid
-                $model->hashid = IdEncoder::encodeHashid($model->id);
-                $model->save(); // Save the hashid
+                IdEncoder::createNewModelWithHashid(IslandCategory::class, $category);
             }
         });
  
