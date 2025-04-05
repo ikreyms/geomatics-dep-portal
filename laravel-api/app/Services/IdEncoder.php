@@ -5,6 +5,15 @@ namespace App\Services;
 use Hashids\Hashids;
 use InvalidArgumentException;
 
+/**
+ * Class IdEncoder
+ *
+ * A utility class for encoding and decoding IDs using Hashids. This class
+ * provides methods to transform integers into short, unique, and URL-safe
+ * hash strings, as well as to decode them back to their original values.
+ *
+ * @package App\Services
+ */
 class IdEncoder
 {
     /**
@@ -16,6 +25,9 @@ class IdEncoder
 
     /**
      * Validate the Hashid configuration.
+     *
+     * Ensures that the necessary configuration options for Hashids
+     * are set. Throws an exception if any are missing.
      *
      * @throws \InvalidArgumentException
      * @return void
@@ -29,6 +41,9 @@ class IdEncoder
 
     /**
      * Initialize the Hashids encoder instance.
+     *
+     * Sets up the Hashids encoder using the configuration values
+     * specified in the application.
      *
      * @return void
      */
@@ -48,6 +63,9 @@ class IdEncoder
     /**
      * Get the Hashids encoder instance.
      *
+     * Returns the initialized Hashids encoder instance. If it hasn't been
+     * initialized yet, this method will initialize it.
+     *
      * @return \Hashids\Hashids
      */
     public static function getInstance(): Hashids
@@ -59,8 +77,8 @@ class IdEncoder
     /**
      * Encode an ID into a Hashid.
      *
-     * This method encodes the given ID using the Hashids library to generate
-     * a short, unique, and URL-safe hash string.
+     * Converts the given integer ID into a Hashid string using the
+     * Hashids library.
      *
      * @param  int  $id
      * @return string
@@ -73,8 +91,8 @@ class IdEncoder
     /**
      * Decode a Hashid into its original ID.
      *
-     * This method decodes the given hash string into the original ID. If the
-     * hash string is invalid, an exception will be thrown.
+     * Converts the given Hashid string back into the original integer
+     * ID. Throws an exception if the Hashid is invalid.
      *
      * @param  string  $hashid
      * @return int|null
@@ -90,5 +108,26 @@ class IdEncoder
         }
 
         return $decoded[0];
+    }
+
+    /**
+     * Create a new model instance with a Hashid.
+     *
+     * Creates and saves a new instance of the specified Eloquent model class,
+     * assigns it a Hashid, and updates the Hashid field in the database.
+     *
+     * @param  string  $modelClass
+     * @param  array  $modelData
+     * @return void
+     */
+    public static function createNewModelWithHashid(string $modelClass, array $modelData): void
+    {   
+        $model = new $modelClass($modelData);
+
+        if ($model->save()) {
+            $model->update([
+                config('hashid.field') => IdEncoder::encodeHashid($model->id),
+            ]);
+        }
     }
 }
