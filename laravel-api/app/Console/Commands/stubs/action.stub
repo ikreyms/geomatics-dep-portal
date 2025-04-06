@@ -2,7 +2,9 @@
 
 namespace {{ namespace }};
 
-class {{ class }}
+use App\Contracts\ControllerAction;
+
+class {{ class }} implements ControllerAction
 {
     public static function run()
     {
