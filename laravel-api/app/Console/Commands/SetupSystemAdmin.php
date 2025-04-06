@@ -39,7 +39,7 @@ class SetupSystemAdmin extends Command
         }
         $user = User::create([
             'username' => 'sadmin',
-            'password' => bcrypt(env('SUPERADMIN_PASSWORD', 'secret')),
+            'password' => env('SUPERADMIN_PASSWORD', 'secret'),
             'email' => 'sadmin@geomaticsdepartment.mv',
         ]);
         $this->line('Account created...');
