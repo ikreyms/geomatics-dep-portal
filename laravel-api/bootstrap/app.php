@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\CheckIfStaff;
+use App\Http\Middleware\CheckIfSurveyor;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -15,7 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'isStaff' => CheckIfStaff::class,
+            'isSurveyor' => CheckIfSurveyor::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->renderable(function (NotFoundHttpException|ModelNotFoundException $e, $request) {
