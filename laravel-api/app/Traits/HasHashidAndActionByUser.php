@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Services\IdEncoder;
-use Hashids\Hashids;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasHashid\HashidUtils;
