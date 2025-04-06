@@ -23,7 +23,6 @@ class RegisterStaffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string', 'unique:users,username', 'regex:/^[a-zA-Z0-9]+$/'],
             'email' => ['required', 'email', 'unique:users,email'],
 
             'first_name' => ['required', 'string', 'regex:/^[a-zA-Z ]+$/'],
