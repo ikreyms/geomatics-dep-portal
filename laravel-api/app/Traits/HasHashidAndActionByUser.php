@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Services\IdEncoder;
+use App\Services\IdEncoderService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasHashid\HashidUtils;
@@ -22,7 +22,7 @@ trait HasHashidAndActionByUser
     {
         static::saved(function (Model $model) {
             if (empty($model->{config('hashid.field')}) && ! $model->isDirty(config('hashid.field'))) {
-                $model->{config('hashid.field')} = IdEncoder::encodeHashid($model->{$model->getKeyName()});
+                $model->{config('hashid.field')} = IdEncoderService::encodeHashid($model->{$model->getKeyName()});
                 $model->save();
             }
         });
