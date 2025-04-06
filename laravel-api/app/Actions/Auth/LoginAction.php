@@ -2,11 +2,12 @@
 
 namespace App\Actions\Auth;
 
+use App\Contracts\ControllerAction;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
-class LoginAction
+class LoginAction implements ControllerAction
 {
     public static function run(array $credentials): string
     {

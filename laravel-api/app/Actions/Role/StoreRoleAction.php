@@ -2,9 +2,10 @@
 
 namespace App\Actions\Role;
 
+use App\Contracts\ControllerAction;
 use Spatie\Permission\Models\Role;
 
-class StoreRoleAction
+class StoreRoleAction implements ControllerAction
 {
     public static function run(array $data)
     {
