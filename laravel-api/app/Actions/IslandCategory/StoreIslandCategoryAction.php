@@ -7,7 +7,7 @@ use App\Models\IslandCategory;
 
 class StoreIslandCategoryAction implements ControllerAction
 {
-    public static function run(array $data)
+    public static function handle(array $data)
     {
         $atoll = IslandCategory::create([
             'name' => strtolower($data['name']),

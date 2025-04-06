@@ -28,7 +28,7 @@ abstract class Controller
     {
         try {
             $data = $request->validated();
-            $model = $actionClass::run($data);
+            $model = $actionClass::handle($data);
             return $resourceClass::make($model);
         } catch (\Exception $e) {
             $this->logError($e, "{$modelName} creation failed", $data ?? null);

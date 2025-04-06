@@ -7,7 +7,7 @@ use Spatie\Permission\Models\Role;
 
 class StoreRoleAction implements ControllerAction
 {
-    public static function run(array $data)
+    public static function handle(array $data)
     {
         $role = Role::create([
             'name' => strtolower($data['name']),
