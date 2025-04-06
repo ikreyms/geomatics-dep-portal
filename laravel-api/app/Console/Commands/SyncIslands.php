@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Island;
-use App\Services\IdEncoder;
+use App\Services\IdEncoderService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -43,7 +43,7 @@ class SyncIslands extends Command
             if (count($data) > 0) {
                 DB::transaction(function () use ($data) {
                     foreach ($data as $island) {
-                        IdEncoder::createNewModelWithHashid(Island::class, $island);
+                        IdEncoderService::createNewModelWithHashid(Island::class, $island);
                     }
                 });
                 $this->info(count($data) . ' islands imported successfully!');

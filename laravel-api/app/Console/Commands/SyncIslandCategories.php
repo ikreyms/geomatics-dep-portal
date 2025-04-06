@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\IslandCategory;
-use App\Services\IdEncoder;
+use App\Services\IdEncoderService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -37,7 +37,7 @@ class SyncIslandCategories extends Command
 
         DB::transaction(function() use($categoryData) {
             foreach ($categoryData as $category) {
-                IdEncoder::createNewModelWithHashid(IslandCategory::class, $category);
+                IdEncoderService::createNewModelWithHashid(IslandCategory::class, $category);
             }
         });
  

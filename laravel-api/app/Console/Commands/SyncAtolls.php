@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Atoll;
-use App\Services\IdEncoder;
+use App\Services\IdEncoderService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -38,7 +38,7 @@ class SyncAtolls extends Command
 
         DB::transaction(function () use ($atollData) {
             foreach ($atollData as $atoll) {
-                IdEncoder::createNewModelWithHashid(Atoll::class, $atoll);
+                IdEncoderService::createNewModelWithHashid(Atoll::class, $atoll);
             }
         });
 

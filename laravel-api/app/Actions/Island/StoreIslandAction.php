@@ -2,15 +2,16 @@
 
 namespace App\Actions\Island;
 
+use App\Contracts\ControllerAction;
 use App\Models\Island;
-use App\Services\IdEncoder;
+use App\Services\IdEncoderService;
 
-class StoreIslandAction
+class StoreIslandAction implements ControllerAction
 {
     public static function run(array $data)
     {
-        $atollId = IdEncoder::decodeHashid($data['atoll_id']);
-        $islandCategoryId = IdEncoder::decodeHashid($data['island_category_id']);
+        $atollId = IdEncoderService::decodeHashid($data['atoll_id']);
+        $islandCategoryId = IdEncoderService::decodeHashid($data['island_category_id']);
         
         $island = Island::create([
             'f_code' => $data['f_code'],
