@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Traits\HasHashid\HasHashid;
+use App\Traits\HasHashidAndActionByUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,7 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens, HasHashid, HasRoles, SoftDeletes;
+    use HasFactory, Notifiable, HasApiTokens, HasHashidAndActionByUser, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'password',
+        'profileable_id',
+        'profileable_type',
     ];
 
     /**
@@ -52,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function profile(): MorphTo
+    public function profileable(): MorphTo
     {
         return $this->morphTo();
     }

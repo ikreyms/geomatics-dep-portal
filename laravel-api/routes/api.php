@@ -24,9 +24,9 @@ Route::group(['prefix' => 'auth'], function () {
 
     // Registration Routes
     Route::controller(RegisterUserController::class)->group(function () {
-        Route::post('register-staff', 'registerStaff')->name('auth.register.staff');
-        Route::post('register-surveyor', 'registerSurveyor')->name('auth.register.surveyor');
-    })->middleware(['auth:sanctum']);
+        Route::post('register-staff', 'registerStaff')->name('auth.register.staff')->middleware(['auth:sanctum']);
+        Route::post('register-surveyor', 'registerSurveyor')->name('auth.register.surveyor')->middleware(['auth:sanctum']);
+    });
 });
 
 // Email Verification Routes (With Throttling)

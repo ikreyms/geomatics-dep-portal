@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->morphs('profile');
+            $table->unsignedBigInteger('profileable_id')->nullable();
+            $table->string('profileable_type')->nullable();
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropMorphs('profile');
+            $table->dropColumn(['profileable_id', 'profileable_type']);
         });
     }
 };

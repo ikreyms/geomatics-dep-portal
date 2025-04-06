@@ -14,7 +14,12 @@ class StaffProfile extends Model
     use HasFactory, HasHashidAndActionByUser, SoftDeletes, LogsActivity;
 
     protected $fillable = [
-        // Add fillable attributes here
+        'first_name',
+        'middle_name',
+        'last_name',
+        'nid',
+        'staff_no',
+        'contact_no',
     ];
 
     public function getActivitylogOptions(): LogOptions
@@ -24,6 +29,6 @@ class StaffProfile extends Model
 
     public function user()
     {
-        return $this->morphOne(User::class, 'profile');
+        return $this->morphOne(User::class, 'profileable');
     }
 }

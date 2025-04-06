@@ -27,7 +27,7 @@ class RegisterStaffRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users,email'],
 
             'first_name' => ['required', 'string', 'regex:/^[a-zA-Z ]+$/'],
-            'first_name' => ['nullable', 'string', 'regex:/^[a-zA-Z ]+$/'],
+            'middle_name' => ['nullable', 'string', 'regex:/^[a-zA-Z ]+$/'],
             'last_name' => ['required', 'string', 'regex:/^[a-zA-Z ]+$/'],
             'nid' => ['required', 'string', 'unique:staff_profiles,nid', 'regex:/^A\d{6}$/'],
             'staff_no' => ['required', 'string', 'unique:staff_profiles,staff_no', 'regex:/^S\d{4}$/'],

@@ -14,6 +14,17 @@ return new class extends Migration
         Schema::create('staff_profiles', function (Blueprint $table) {
             $table->id();
             $table->string(config('hashid.field'))->nullable();
+            $table->string('first_name');
+            $table->string('middle_name')->nullable();
+            $table->string('last_name');
+            $table->string('nid');
+            $table->string('staff_no');
+            $table->string('contact_no');
+
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
+
             $table->softDeletes();
             $table->timestamps();
 
