@@ -40,7 +40,14 @@ class AuthServiceProvider extends ServiceProvider
             );
             // http://localhost:8000/api/verify-email/{user}/{emailHash}
 
-            return $frontEndUrl . '?verify_url=' . urlencode(Str::of($verifyUrl)->replace($baseUrl . '/api', ''));
+            // Extract only the path from the verify URL
+            $path = parse_url($verifyUrl, PHP_URL_PATH); 
+            // This will give us something like /api/verify-email/{user}/{emailHash}
+
+            // Remove the /api part of the path
+            $path = Str::replaceFirst('/api', '', $path);
+
+            return $frontEndUrl . '?verify_url=' . urlencode($path);
             // http:://localhost:3000/email/verify?verify_url=verify-email/{user}/{emailHash}
         });
     }
