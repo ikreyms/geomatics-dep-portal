@@ -23,12 +23,11 @@ class EmailVerificationController extends Controller
             }
 
             SendMailJob::dispatch(
-                emails: [$user->email],
+                recipients: [$user->email],
                 mailableClass: EmailVerificationMail::class,
                 mailableArgs: [$user],
             );
     
-            // $request->user()->sendEmailVerificationNotification();
             return response(null, 200);
         } catch (Exception $e) {
             $this->logError($e, 'Failed to send verification email');

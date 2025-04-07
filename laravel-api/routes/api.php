@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\AtollController;
 use App\Http\Controllers\Auth\LoginController;
@@ -23,9 +22,9 @@ Route::group(['prefix' => 'auth'], function () {
         ->middleware(['auth:sanctum']);
 
     // Registration Routes
-    Route::controller(RegisterUserController::class)->group(function () {
-        Route::post('register-staff', 'registerStaff')->name('auth.register.staff')->middleware(['auth:sanctum']);
-        Route::post('register-surveyor', 'registerSurveyor')->name('auth.register.surveyor')->middleware(['auth:sanctum']);
+    Route::controller(RegisterUserController::class)->middleware(['auth:sanctum'])->group(function () {
+        Route::post('register-staff', 'registerStaff')->name('auth.register.staff');
+        Route::post('register-surveyor', 'registerSurveyor')->name('auth.register.surveyor');
     });
 });
 

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use App\Services\IdEncoderService;
 use Illuminate\Console\Command;
 use Spatie\Activitylog\Facades\CauserResolver;
 use Spatie\Permission\Models\Role;
@@ -43,6 +44,7 @@ class SetupSystemAdmin extends Command
             'password' => env('SUPERADMIN_PASSWORD', 'secret'),
             'email' => 'sadmin@geomaticsdepartment.mv',
         ]);
+        $user->update([config('hashid.field') => IdEncoderService::encodeHashid($user->id)]);
         $this->line('Account created...');
 
         CauserResolver::setCauser($user);
