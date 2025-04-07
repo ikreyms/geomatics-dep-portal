@@ -6,7 +6,7 @@ use App\Contracts\ControllerAction;
 
 class {{ class }} implements ControllerAction
 {
-    public static function handle()
+    public function __invoke()
     {
         //
     }
