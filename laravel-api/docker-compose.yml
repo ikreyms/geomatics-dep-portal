@@ -65,6 +65,8 @@ services:
             MP_SMTP_AUTH_ALLOW_INSECURE: 1
         networks:
             - sail
+        depends_on:
+            - laravel.test
 networks:
     sail:
         driver: bridge
