@@ -10,6 +10,6 @@ class RegisterStaffAction implements ControllerAction
 {
     public static function run(array $data)
     {
-        return (new RegisterUserService(StaffProfile::class))->handle($data);
+        return (new RegisterUserService(StaffProfile::class, $data));
     }
 }

@@ -12,37 +12,62 @@ use Illuminate\Support\Facades\Mail;
 /**
  * Class RegisterUserService
  *
- * Handles user and profile registration, including creating the user, 
- * generating a password, and sending the credentials via email.
+ * Handles user registration, profile creation, password generation, and email notification.
  *
  * @package App\Services
  */
 class RegisterUserService
 {
+    /**
+     * @var string|null $profile The profile instance.
+     */
     protected $profile = null;
+
+    /**
+     * @var User|null $user The user instance.
+     */
     protected $user = null;
+
+    /**
+     * @var array $userDataFields The user data fields to extract from input data.
+     */
     protected array $userDataFields = ['email'];
+
+    /**
+     * @var string $identificationKey The key for user identification (e.g., 'surveyor_reg_no').
+     */
     protected string $identificationKey;
+
+    /**
+     * @var string $profileClass The profile model class (e.g., SurveyorProfile).
+     */
     protected string $profileClass;
 
     /**
-     * Constructor.
-     * 
-     * @param string $profileClass Profile class name (e.g., SurveyorProfile).
+     * Initializes the service with profile class and sets the identification key.
+     * Then calls the handle method to perform the registration.
+     *
+     * @param string $profileClass The profile model class (e.g., SurveyorProfile).
+     * @param array  $data The user and profile data.
+     * @return array The created user and profile instances.
      */
-    public function __construct(string $profileClass)
+    public function __invoke(string $profileClass, array $data)
     {
         $this->profileClass = $profileClass;
         $this->identificationKey = $profileClass === SurveyorProfile::class ? 'surveyor_reg_no' : 'staff_no';
+        return $this->handle($data);
     }
 
     /**
-     * Registers the user and profile, generates credentials, and sends email.
+     * Registers a user and profile, generates a password, and sends an email with credentials.
      *
-     * @param array $data User and profile data.
-     * @return array Created user and profile.
+     * This method creates both the user and profile records inside a database transaction.
+     * After the records are created, it sends the user’s credentials to the provided email.
+     *
+     * @param array $data The user and profile data (e.g., 'email', 'surveyor_reg_no').
+     * @return array The created user and profile instances.
      */
-    public function handle(array $data)
+    private function handle(array $data)
     {
         $userData = Arr::only($data, $this->userDataFields);
         $profileData = Arr::except($data, $this->userDataFields);
@@ -64,21 +89,23 @@ class RegisterUserService
     }
 
     /**
-     * Generates a random password.
+     * Generates a random password for the user.
+     *
+     * The password is 10 bytes long, returned as a 20-character hexadecimal string.
      *
      * @return string The generated password.
      */
     private function generateRandomPassword()
     {
-        return bin2hex(random_bytes(10));
+        return bin2hex(random_bytes(10)); // 10 bytes -> 20 hex characters
     }
 
     /**
-     * Sends the user's credentials via email.
+     * Sends an email with the user's credentials (username and password).
      *
-     * @param string $username User's username.
-     * @param string $password User's password.
-     * @param User $user User instance.
+     * @param string $username The user's username.
+     * @param string $password The user's password.
+     * @param User   $user The user instance.
      */
     private function sendUserCredentialsMail(string $username, string $password, User $user)
     {

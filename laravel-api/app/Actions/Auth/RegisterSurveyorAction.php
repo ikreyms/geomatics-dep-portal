@@ -10,6 +10,6 @@ class RegisterSurveyorAction implements ControllerAction
 {
     public static function run(array $data)
     {
-       return (new RegisterUserService(SurveyorProfile::class))->handle($data);
+       return (new RegisterUserService(SurveyorProfile::class, $data));
     }
 }
