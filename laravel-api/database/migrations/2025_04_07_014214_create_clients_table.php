@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('surveyor_profiles', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string(config('hashid.field'))->nullable();
-            $table->string('first_name');
-            $table->string('middle_name')->nullable();
-            $table->string('last_name');
-            $table->string('nid');
-            $table->string('surveyor_reg_no');
-            $table->string('contact_no');
+            $table->string('name')->unique();
 
             $table->softDeletes();
             $table->timestamps();
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('surveyor_profiles');
+        Schema::dropIfExists('clients');
     }
 };

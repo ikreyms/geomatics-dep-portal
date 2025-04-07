@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
+use Spatie\Activitylog\Facades\CauserResolver;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -43,6 +44,8 @@ class SetupSystemAdmin extends Command
             'email' => 'sadmin@geomaticsdepartment.mv',
         ]);
         $this->line('Account created...');
+
+        CauserResolver::setCauser($user);
 
         $this->line('Creating system administrator role...');
         $adminRole = Role::findOrCreate(config('permission.system_admin_role_name'));

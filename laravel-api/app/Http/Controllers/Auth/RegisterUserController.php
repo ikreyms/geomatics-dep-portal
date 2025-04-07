@@ -20,7 +20,7 @@ class RegisterUserController extends Controller
     {
         try {
             $data = $request->validated();
-            [$user, $profile] = RegisterStaffAction::run($data);
+            [$user, $profile] = new RegisterStaffAction($data);
             return response()->json([
                 'user' => UserResource::make($user),
                 'profile' => StaffProfileResource::make($profile),
@@ -35,7 +35,7 @@ class RegisterUserController extends Controller
     {
         try {
             $data = $request->validated();
-            [$user, $profile] = RegisterSurveyorAction::run($data);
+            [$user, $profile] = new RegisterSurveyorAction($data);
             return response()->json([
                 'user' => UserResource::make($user),
                 'profile' => SurveyorProfileResource::make($profile),

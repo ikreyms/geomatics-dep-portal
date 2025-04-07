@@ -13,5 +13,5 @@ interface ControllerAction
      * @param array $data The input data needed for the action (e.g., model attributes).
      * @return mixed The result of the action (e.g., created/updated model, status).
      */
-    public static function run(array $data);
+    public function __invoke(array $data);
 }

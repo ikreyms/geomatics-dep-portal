@@ -17,10 +17,6 @@ return new class extends Migration
             $table->string('abbreviation')->unique();
             $table->string('short_name')->unique();
 
-            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
-
             $table->softDeletes();
             $table->timestamps();
 
