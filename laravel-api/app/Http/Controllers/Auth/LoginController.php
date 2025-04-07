@@ -15,7 +15,7 @@ class LoginController extends Controller
     {
         try {
             $credentials = $request->validated();
-            $token = LoginAction::handle($credentials);
+            $token = new LoginAction($credentials);
     
             $cookie = cookie(
                 name: config('site.cookie_name'),

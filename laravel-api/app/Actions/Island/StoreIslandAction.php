@@ -8,7 +8,7 @@ use App\Services\IdEncoderService;
 
 class StoreIslandAction implements ControllerAction
 {
-    public static function handle(array $data)
+    public function __invoke(array $data)
     {
         $atollId = IdEncoderService::decodeHashid($data['atoll_id']);
         $islandCategoryId = IdEncoderService::decodeHashid($data['island_category_id']);
