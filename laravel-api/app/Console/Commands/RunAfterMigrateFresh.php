@@ -28,5 +28,6 @@ class RunAfterMigrateFresh extends Command
         $this->call('setup:admin');
         $this->call('sync:island-categories');
         $this->call('sync:atolls');
+        $this->call('sync:islands', ['file' => 'islands.csv']);
     }
 }
