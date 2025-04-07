@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendMailJob;
+use App\Mail\EmailVerificationMail;
 use Exception;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
@@ -12,13 +14,21 @@ class EmailVerificationController extends Controller
     public function sendVerificationEmail(Request $request)
     {
         try {
-            if ($request->user()->hasVerifiedEmail()) {
+            $user = $request->user();
+
+            if ($user->hasVerifiedEmail()) {
                 return response()->json([
                     'status' => 'Email already verified'
                 ]);
             }
+
+            SendMailJob::dispatch(
+                emails: [$user->email],
+                mailableClass: EmailVerificationMail::class,
+                mailableArgs: [$user],
+            );
     
-            $request->user()->sendEmailVerificationNotification();
+            // $request->user()->sendEmailVerificationNotification();
             return response(null, 200);
         } catch (Exception $e) {
             $this->logError($e, 'Failed to send verification email');

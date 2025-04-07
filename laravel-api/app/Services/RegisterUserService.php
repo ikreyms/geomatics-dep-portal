@@ -3,11 +3,11 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Jobs\SendMailJob;
 use Illuminate\Support\Arr;
-use App\Mail\UserCredentialsMail;
 use App\Models\SurveyorProfile;
+use App\Mail\UserCredentialsMail;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 /**
  * Class RegisterUserService
@@ -29,12 +29,12 @@ class RegisterUserService
     protected $user = null;
 
     /**
-     * @var array $userDataFields The user data fields to extract from input data.
+     * @var array $userDataFields The fields to extract for user data.
      */
     protected array $userDataFields = ['email'];
 
     /**
-     * @var string $identificationKey The key for user identification (e.g., 'surveyor_reg_no').
+     * @var string $identificationKey The key used for user identification (e.g., 'surveyor_reg_no').
      */
     protected string $identificationKey;
 
@@ -44,7 +44,7 @@ class RegisterUserService
     protected string $profileClass;
 
     /**
-     * Initialize the service with profile class and identification key.
+     * Initialize the service with the profile class and identification key.
      *
      * @param string $profileClass The profile model class.
      */
@@ -76,8 +76,7 @@ class RegisterUserService
             $user->save();
         });
 
-        // TODO:: use a job to send the email. and quickly return the user and profile.
-        $this->sendUserCredentialsMail($user->username, $generatedPassword, $user);
+        $this->sendUserCredentialsMail($user->email, $user->username, $generatedPassword);
 
         return [$user, $profile];
     }
@@ -93,16 +92,18 @@ class RegisterUserService
     }
 
     /**
-     * Sends the user's credentials (username and password) via email.
+     * Dispatches a job to send the user's credentials via email.
      *
+     * @param string $email The user's email address.
      * @param string $username The user's username.
      * @param string $password The user's password.
-     * @param User   $user The user instance.
      */
-    private function sendUserCredentialsMail(string $username, string $password, User $user)
+    private function sendUserCredentialsMail(string $email, string $username, string $password)
     {
-        if ($user) {
-            Mail::to($user->email)->send(new UserCredentialsMail($username, $password));
-        }
+        SendMailJob::dispatch(
+            emails: [$email],
+            mailableClass: UserCredentialsMail::class,
+            mailableArgs: [$username, $password]
+        );
     }
 }

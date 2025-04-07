@@ -37,7 +37,7 @@ class UserCredentialsMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.staff-registered',
+            markdown: 'mail.user-registered',
             with: [
                 'username' => $this->username,
                 'password' => $this->password,

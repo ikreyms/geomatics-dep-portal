@@ -19,8 +19,8 @@ abstract class Controller
     {
         Log::error($description, [
             'error' => $e->getMessage(),
+            'data' => $data,
             'exception' => $e,
-            'data' => $data
         ]);
     }
 
