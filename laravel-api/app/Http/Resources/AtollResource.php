@@ -15,7 +15,7 @@ class AtollResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->hashid,
+            'id' => $this->{config('hashid.field')},
             'short_name' => $this->short_name,
             'abbreviation' => $this->abbreviation,
         ];

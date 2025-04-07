@@ -14,6 +14,9 @@ class ClientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->{config('hashid.field')},
+            'name' => $this->name,
+        ];
     }
 }

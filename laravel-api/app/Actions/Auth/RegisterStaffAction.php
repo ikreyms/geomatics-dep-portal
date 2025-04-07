@@ -8,8 +8,8 @@ use App\Services\RegisterUserService;
 
 class RegisterStaffAction implements ControllerAction
 {
-    public function __invoke(array $data)
+    public static function handle(array $data)
     {
-        return (new RegisterUserService(StaffProfile::class, $data));
+        return (new RegisterUserService(StaffProfile::class))->handle($data);
     }
 }

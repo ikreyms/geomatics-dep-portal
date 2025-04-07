@@ -7,7 +7,7 @@ use App\Contracts\ControllerAction;
 
 class StoreAtollAction implements ControllerAction
 {
-    public function __invoke(array $data): Atoll
+    public static function handle(array $data): Atoll
     {
         $atoll = Atoll::create([
             'short_name' => strtolower($data['short_name']),

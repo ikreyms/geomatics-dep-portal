@@ -8,8 +8,8 @@ use App\Services\RegisterUserService;
 
 class RegisterSurveyorAction implements ControllerAction
 {
-    public function __invoke(array $data)
+    public static function handle(array $data)
     {
-       return (new RegisterUserService(SurveyorProfile::class, $data));
+       return (new RegisterUserService(SurveyorProfile::class))->handle($data);
     }
 }

@@ -11,11 +11,11 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class LoginController extends Controller
 {
-    public function store(LoginRequest $request)
+    public function store(Loginrequest $request)
     {
         try {
             $credentials = $request->validated();
-            $token = new LoginAction($credentials);
+            $token = LoginAction::handle($credentials);
     
             $cookie = cookie(
                 name: config('site.cookie_name'),

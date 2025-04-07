@@ -44,30 +44,23 @@ class RegisterUserService
     protected string $profileClass;
 
     /**
-     * Initializes the service with profile class and sets the identification key.
-     * Then calls the handle method to perform the registration.
+     * Initialize the service with profile class and identification key.
      *
-     * @param string $profileClass The profile model class (e.g., SurveyorProfile).
-     * @param array  $data The user and profile data.
-     * @return array The created user and profile instances.
+     * @param string $profileClass The profile model class.
      */
-    public function __invoke(string $profileClass, array $data)
+    public function __construct(string $profileClass)
     {
         $this->profileClass = $profileClass;
         $this->identificationKey = $profileClass === SurveyorProfile::class ? 'surveyor_reg_no' : 'staff_no';
-        return $this->handle($data);
     }
 
     /**
-     * Registers a user and profile, generates a password, and sends an email with credentials.
+     * Registers the user and profile, generates a password, and sends credentials email.
      *
-     * This method creates both the user and profile records inside a database transaction.
-     * After the records are created, it sends the user’s credentials to the provided email.
-     *
-     * @param array $data The user and profile data (e.g., 'email', 'surveyor_reg_no').
+     * @param array $data The user and profile data.
      * @return array The created user and profile instances.
      */
-    private function handle(array $data)
+    public function handle(array $data)
     {
         $userData = Arr::only($data, $this->userDataFields);
         $profileData = Arr::except($data, $this->userDataFields);
@@ -83,25 +76,24 @@ class RegisterUserService
             $user->save();
         });
 
+        // TODO:: use a job to send the email. and quickly return the user and profile.
         $this->sendUserCredentialsMail($user->username, $generatedPassword, $user);
 
         return [$user, $profile];
     }
 
     /**
-     * Generates a random password for the user.
-     *
-     * The password is 10 bytes long, returned as a 20-character hexadecimal string.
+     * Generates a random password (10 bytes, 20 hex characters).
      *
      * @return string The generated password.
      */
     private function generateRandomPassword()
     {
-        return bin2hex(random_bytes(10)); // 10 bytes -> 20 hex characters
+        return bin2hex(random_bytes(10));
     }
 
     /**
-     * Sends an email with the user's credentials (username and password).
+     * Sends the user's credentials (username and password) via email.
      *
      * @param string $username The user's username.
      * @param string $password The user's password.

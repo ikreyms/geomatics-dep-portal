@@ -15,7 +15,7 @@ class RoleResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->hashid,
+            'id' => $this->{config('hashid.field')},
             'name' => $this->name,
         ];
     }

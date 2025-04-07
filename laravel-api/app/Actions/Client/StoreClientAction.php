@@ -7,7 +7,7 @@ use App\Models\Client;
 
 class StoreClientAction implements ControllerAction
 {
-    public function __invoke(array $data)
+    public static function handle(array $data)
     {
         $client = Client::create([
             'name' => strtolower($data['name']),

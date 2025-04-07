@@ -15,7 +15,7 @@ class SurveyorProfileResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->hashid,
+            'id' => $this->{config('hashid.field')},
             'first_name' => $this->first_name,
             'middle_name' => $this->whenNotNull($this->middle_name),
             'last_name' => $this->last_name,

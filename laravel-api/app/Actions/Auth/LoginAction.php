@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class LoginAction implements ControllerAction
 {
-    public function __invoke(array $credentials): string
+    public static function handle(array $credentials): string
     {
         $user = User::where('username', $credentials['username'])->first();
 
