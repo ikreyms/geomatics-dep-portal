@@ -6,7 +6,7 @@ use App\Contracts\ControllerAction;
 
 class {{ class }} implements ControllerAction
 {
-    public function __invoke()
+    public function __invoke(array $data)
     {
         //
     }
