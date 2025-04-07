@@ -21,10 +21,6 @@ return new class extends Migration
             $table->string('surveyor_reg_no');
             $table->string('contact_no');
 
-            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
-
             $table->softDeletes();
             $table->timestamps();
 

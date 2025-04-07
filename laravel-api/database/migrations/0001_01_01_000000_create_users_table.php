@@ -20,10 +20,6 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
 
-            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
-
             $table->softDeletes();
             $table->timestamps();
 

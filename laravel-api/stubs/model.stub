@@ -4,14 +4,13 @@ namespace {{ namespace }};
 
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\HasHashidAndActionByUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class {{ class }} extends Model
 {
-    use HasFactory, HasHashidAndActionByUser, SoftDeletes, LogsActivity;
+    use HasFactory, SoftDeletes, LogsActivity;
 
     protected $fillable = [
         // Add fillable attributes here
