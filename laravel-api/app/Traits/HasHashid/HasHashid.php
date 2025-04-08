@@ -20,7 +20,7 @@ trait HasHashid
     {
         static::saved(function (Model $model) {
             if (empty($model->{config('hashid.field')}) && ! $model->isDirty('hashid')) {
-                $model->{config('hashid.field')} = IdEncoderService::encodeHashid($model->{$model->getKeyName()});
+                $model->{config('hashid.field')} = IdEncoderService::encodeId($model->{$model->getKeyName()});
                 $model->save();
             }
         });

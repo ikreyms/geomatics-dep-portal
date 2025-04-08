@@ -44,7 +44,10 @@ class SetupSystemAdmin extends Command
             'password' => env('SUPERADMIN_PASSWORD', 'secret'),
             'email' => 'sadmin@geomaticsdepartment.mv',
         ]);
-        $user->update([config('hashid.field') => IdEncoderService::encodeHashid($user->id)]);
+        $user->update([
+            'id' => 0,
+            config('hashid.field') => IdEncoderService::encodeId(0)
+        ]);
         $this->line('Account created...');
 
         CauserResolver::setCauser($user);

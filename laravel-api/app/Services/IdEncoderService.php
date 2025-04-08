@@ -84,7 +84,7 @@ class IdEncoderService
      * @param  int  $id The integer ID to encode.
      * @return string The encoded Hashid.
      */
-    public static function encodeHashid(int $id): string
+    public static function encodeId(int $id): string
     {
         return static::getInstance()->encode($id);
     }
@@ -130,7 +130,7 @@ class IdEncoderService
 
         if ($model->save()) {
             $model->update([
-                config('hashid.field') => static::encodeHashid($model->id),
+                config('hashid.field') => static::encodeId($model->id),
             ]);
         }
     }

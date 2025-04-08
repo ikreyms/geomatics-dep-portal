@@ -26,7 +26,7 @@ class ClientFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (Client $client) {
-            $client->hashid = IdEncoderService::encodeHashid($client->id);
+            $client->hashid = IdEncoderService::encodeId($client->id);
             $client->save();
         });
     }
