@@ -19,7 +19,7 @@ class SendMailJob implements ShouldQueue
         private array $mailableArgs,
     )
     {
-        $this->queue = 'default';
+        $this->queue = 'mail-q';
     }
 
     /**

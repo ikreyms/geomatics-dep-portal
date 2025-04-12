@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\VerifyUserEmail;
 use App\Traits\HasHashid\HasHashid;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -60,6 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults();
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyUserEmail);
     }
 
     public function profileable(): MorphTo
