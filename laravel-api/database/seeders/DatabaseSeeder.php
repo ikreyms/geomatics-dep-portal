@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Client;
+use App\Models\PlateRequestStatus;
 use App\Models\User;
 use Database\Factories\ClientFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -21,7 +22,16 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        
+        $plateRequestStatuses = ['pending', 'approved', 'plates_issued', 'rejected', 'expired'];
 
         Client::factory(15)->create();
+
+        foreach ($plateRequestStatuses as $status) {
+            PlateRequestStatus::create([
+                'name' => $status,
+            ]);
+        }
+        
     }
 }
