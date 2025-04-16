@@ -101,7 +101,7 @@ class RegisterUserService
     private function sendUserCredentialsMail(string $email, string $username, string $password)
     {
         SendMailJob::dispatch(
-            emails: [$email],
+            recipients: [$email],
             mailableClass: UserCredentialsMail::class,
             mailableArgs: [$username, $password]
         );

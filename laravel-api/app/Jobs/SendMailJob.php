@@ -14,12 +14,12 @@ class SendMailJob implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        private array $emails,
+        private array $recipients,
         private string $mailableClass,
         private array $mailableArgs,
     )
     {
-        $this->queue = 'default';
+        $this->queue = 'mail-q';
     }
 
     /**
@@ -27,7 +27,7 @@ class SendMailJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->emails)
+        Mail::to($this->recipients)
             ->send(new $this->mailableClass(...$this->mailableArgs));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasHashid\HasHashid;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Island extends Model
 {
-    use HasFactory, SoftDeletes, LogsActivity;
+    use HasFactory, SoftDeletes, LogsActivity, HasHashid;
     
     protected $fillable = [
         'f_code',

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use App\Services\IdEncoderService;
 use Illuminate\Console\Command;
 use Spatie\Activitylog\Facades\CauserResolver;
 use Spatie\Permission\Models\Role;
@@ -42,6 +43,10 @@ class SetupSystemAdmin extends Command
             'username' => 'sadmin',
             'password' => env('SUPERADMIN_PASSWORD', 'secret'),
             'email' => 'sadmin@geomaticsdepartment.mv',
+        ]);
+        $user->update([
+            'id' => 0,
+            config('hashid.field') => IdEncoderService::encodeId(0)
         ]);
         $this->line('Account created...');
 

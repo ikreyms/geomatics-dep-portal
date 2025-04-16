@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('islands', function (Blueprint $table) {
             $table->id();
-            $table->string(config('hashid.field'))->nullable();
+            $table->string(config('hashid.field'))->unique()->nullable();
             $table->string('f_code')->unique();
             $table->foreignId('atoll_id')->constrained('atolls', 'id')->cascadeOnDelete();
             $table->string('name')->nullable();

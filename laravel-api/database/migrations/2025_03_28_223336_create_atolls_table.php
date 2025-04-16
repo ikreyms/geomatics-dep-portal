@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('atolls', function (Blueprint $table) {
             $table->id();
-            $table->string(config('hashid.field'))->nullable();
+            $table->string(config('hashid.field'))->unique()->nullable();
             $table->string('abbreviation')->unique();
             $table->string('short_name')->unique();
 

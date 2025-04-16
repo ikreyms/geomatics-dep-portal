@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\VerifyUserEmail;
+use App\Traits\HasHashid\HasHashid;
 use Laravel\Sanctum\HasApiTokens;
 
 use Spatie\Activitylog\LogOptions;
@@ -17,7 +19,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens, HasRoles, SoftDeletes, LogsActivity;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles, SoftDeletes, LogsActivity, HasHashid;
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var list<string>
      */
     protected $fillable = [
+        'id',
         'username',
         'email',
         'password',
@@ -58,6 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults();
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyUserEmail);
     }
 
     public function profileable(): MorphTo

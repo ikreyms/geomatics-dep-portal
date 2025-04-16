@@ -2,33 +2,22 @@
 
 namespace App\Models;
 
-use App\Traits\HasHashid\HasHashid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class StaffProfile extends Model
+class PlateRequestStatus extends Model
 {
-    use HasFactory, SoftDeletes, LogsActivity, HasHashid;
+    use HasFactory, SoftDeletes, LogsActivity;
 
     protected $fillable = [
-        'first_name',
-        'middle_name',
-        'last_name',
-        'nid',
-        'staff_no',
-        'contact_no',
+        'name',
     ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults();
-    }
-
-    public function user()
-    {
-        return $this->morphOne(User::class, 'profileable');
     }
 }

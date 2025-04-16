@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('{{ table }}', function (Blueprint $table) {
+        Schema::create('plate_request_statuses', function (Blueprint $table) {
             $table->id();
             $table->string(config('hashid.field'))->unique()->nullable();
+            $table->string('name')->unique();
+
             $table->softDeletes();
             $table->timestamps();
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('{{ table }}');
+        Schema::dropIfExists('plate_request_statuses');
     }
 };
